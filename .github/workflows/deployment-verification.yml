@@ -1,0 +1,66 @@
+name: Deployment verification
+on:
+  workflow_call:
+    inputs:
+      base_url:
+        description: Credential-free HTTPS service origin
+        required: true
+        type: string
+      expected_environment:
+        description: Expected APP_ENVIRONMENT value
+        required: true
+        type: string
+      expected_release:
+        description: Expected APP_RELEASE value
+        required: true
+        type: string
+      expected_revision:
+        description: Expected full commit revision
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Credential-free HTTPS service origin
+        required: true
+        type: string
+      expected_environment:
+        description: Expected APP_ENVIRONMENT value
+        required: true
+        type: string
+      expected_release:
+        description: Expected APP_RELEASE value
+        required: true
+        type: string
+      expected_revision:
+        description: Expected full commit revision
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: deployment-verification-${{ inputs.expected_environment }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
+        with:
+          version: "0.12.5"
+      - run: uv sync --frozen --dev
+      - name: Verify deployed artifact
+        env:
+          BASE_URL: ${{ inputs.base_url }}
+          EXPECTED_ENVIRONMENT: ${{ inputs.expected_environment }}
+          EXPECTED_RELEASE: ${{ inputs.expected_release }}
+          EXPECTED_REVISION: ${{ inputs.expected_revision }}
+        run: |
+          uv run python tools/deployment_smoke.py \
+            --base-url "$BASE_URL" \
+            --expected-service "gambit-mcp" \
+            --expected-environment "$EXPECTED_ENVIRONMENT" \
+            --expected-release "$EXPECTED_RELEASE" \
+            --expected-revision "$EXPECTED_REVISION"

@@ -1,0 +1,1 @@
+"""gambit-mcp package."""
