@@ -30,6 +30,7 @@ Git history provides the audit trail.
 |---|---|---|---|
 | `m1-surface` | M1 exposes two static resources and one synthetic contract tool; it intentionally has no Gambit runtime dependency. | `src/gambit_mcp/server.py`, `docs/PROJECT_PLAN.md` | 2026-09-13 |
 | `m1-complete` | M1 is complete only for the local/no-data boundary; limits, real stdio, Inspector, artifacts, audit and container smoke passed. | `docs/M1_SIGNOFF.md` | 2026-09-13 |
+| `m2-artifact-blocker` | Gambit 1.1.0 exists in the reviewed source metadata but has no PyPI project, GitHub release, or Git tag; no Gambit dependency/tool may be activated yet. | `docs/M2_READINESS.md`, `docs/ADR-0004-GAMBIT-DEPENDENCY-BOUNDARY.md` | 2026-09-13 |
 
 ## Verified traps and failed approaches
 

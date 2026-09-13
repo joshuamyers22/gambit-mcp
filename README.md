@@ -10,12 +10,16 @@ make check
 uv run gambit-mcp
 ```
 
-Current scope is only the M1 walking skeleton:
+M1 is complete and M2 market-data contract groundwork is underway:
 
 - `gambit://server/about` and `gambit://capabilities` resources;
 - `gambit_check_contract`, a synthetic schema/compatibility tool;
 - no market data, Gambit calculations, persistence, remote authorization, live
   trading, arbitrary code, filesystem paths, or arbitrary network access.
+
+No market-data tool is exposed yet. The immutable Gambit artifact, ingestion
+format, parser-isolation evidence, and data/quant semantic approvals remain M2
+gates; see `docs/M2_READINESS.md`.
 
 Set `APP_TRANSPORT=streamable-http` to run the pre-production HTTP transport on
 localhost. It is not approved for remote production use.

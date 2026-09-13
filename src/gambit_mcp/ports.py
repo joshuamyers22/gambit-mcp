@@ -5,6 +5,16 @@ from __future__ import annotations
 from types import TracebackType
 from typing import Protocol, Self
 
+from .market_data import MarketDataBatch, MarketDataValidation
+
+
+class GambitPort(Protocol):
+    """Narrow adapter boundary; never expose Gambit's full module API."""
+
+    def validate_market_data(self, batch: MarketDataBatch) -> MarketDataValidation:
+        """Validate an already admitted normalized batch without mutating it."""
+        ...
+
 
 class UnitOfWork(Protocol):
     """Transaction boundary implemented by an infrastructure adapter."""

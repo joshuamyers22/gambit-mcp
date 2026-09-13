@@ -59,7 +59,9 @@ M1 exposes only two static resources and `gambit_check_contract`. Its local
 transport, execution-limit, interoperability, artifact and container gates pass
 as recorded in `M1_SIGNOFF.md`. Remote production remains prohibited. Gambit is
 intentionally not a runtime dependency until the M2 dependency/capability ADR is
-approved.
+approved. M2 groundwork now defines a normalized owned data contract and narrow
+adapter port, but `M2_READINESS.md` records the artifact, ingestion, hostile-input
+and independent domain gates that block exposing it.
 
 ## M0 progress
 
