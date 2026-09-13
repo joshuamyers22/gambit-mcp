@@ -8,12 +8,12 @@ boundary changes.
 |---|---|---|---|---|---|
 | R-001 | Separate MCP transport from Gambit | Plan invariant | ADR-0001 and package boundary review | M0 | Accepted |
 | R-002 | Target MCP 2026-07-28 with a pinned Tier 1 SDK | MCP standard | Lockfile and modern client contract | M1 | Implemented |
-| R-003 | Define supported host/protocol matrix | MCP standard | ADR-0002 plus SDK client contracts | M0/M1 | M0 accepted; M1 wire evidence open |
+| R-003 | Define supported host/protocol matrix | MCP standard | ADR-0002, SDK subprocess contracts and Inspector | M0/M1 | M1 complete for named clients |
 | R-004 | No live trading, arbitrary code/path/URL, or investment advice | Project brief | Surface inventory and negative schema tests | All | Partially implemented |
 | R-005 | Transport-specific identity and authorization | MCP standard | ADR-0003 and authorization matrix | M0/M3 | Local M1 accepted; M3 open |
 | R-006 | Preserve Gambit maturity/capability labels | Gambit brief/status | Capability projection contract tests | M2+ | Proposed |
 | R-007 | Pin an approved immutable Gambit artifact | Production standard | Artifact digest, lockfile and upstream evidence | M2 | No dependency in M1; M2 open |
-| R-008 | Bound every request, response, call and queue | MCP standard | Boundary and saturation tests | M1+ | Configured; enforcement open |
+| R-008 | Bound every request, response, call and queue | MCP standard | Boundary and saturation tests | M1+ | M1 local boundaries enforced; distributed M3 open |
 | R-009 | Admit only explicit formats through a parser trust boundary | GAP-01 | Hostile corpus and admission-state tests | M2 | Proposed |
 | R-010 | Version causal market-data semantics | GAP-02 | Quant/data golden and rejection cases | M2/M5 | Proposed |
 | R-011 | Enforce trusted data entitlements | GAP-03 | Policy transition/enforcement matrix | M4 | Proposed |

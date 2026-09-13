@@ -40,15 +40,17 @@ owner, approver, compensating control, residual risk, and expiry.
 - [x] **SECURITY** Local HTTP binds to `127.0.0.1` by default.
 - [x] **PROJECT** Explicit request, response, concurrency and timeout values exist.
 - [x] **SPEC** Modern and legacy-era in-process client contracts are tested.
-- [ ] **SPEC** Golden-wire tests verify modern request metadata, response
-  `serverInfo`, and Streamable HTTP `Mcp-*` header/body parity.
-- [ ] **SECURITY** Enforce request/argument/response/time/concurrency limits at
+- [x] **SPEC** Real-process tests verify modern request metadata and negotiated
+  response `serverInfo`. Streamable HTTP `Mcp-*` parity remains an M3 gate.
+- [x] **SECURITY** Enforce request/argument/response/time/concurrency limits at
   every active transport boundary; configuration alone is not evidence.
-- [ ] **SECURITY** Capture stdio and prove stray application output cannot corrupt
+- [x] **SECURITY** Capture stdio and prove stray application output cannot corrupt
   stdout; diagnostics and telemetry must use stderr.
-- [ ] **PROJECT** Run MCP Inspector manually and retain the result.
+- [x] **PROJECT** Run MCP Inspector and retain the commands/result in
+  `M1_SIGNOFF.md`.
 - [ ] **PROJECT** Maintain realistic model evals with held-out tasks, repeated
-  trials, trajectory grading, task success and token-cost thresholds.
+  trials, trajectory grading, task success and token-cost thresholds (M6 before
+  production promotion; M1 has no real research workflow to evaluate).
 - [x] **PROJECT** Define the initial supported client/host matrix and compatibility
   policy. Adding any host requires its own contract evidence.
 

@@ -29,6 +29,7 @@ Git history provides the audit trail.
 | Key | State worth retrieving later | Evidence | Last verified |
 |---|---|---|---|
 | `m1-surface` | M1 exposes two static resources and one synthetic contract tool; it intentionally has no Gambit runtime dependency. | `src/gambit_mcp/server.py`, `docs/PROJECT_PLAN.md` | 2026-09-13 |
+| `m1-complete` | M1 is complete only for the local/no-data boundary; limits, real stdio, Inspector, artifacts, audit and container smoke passed. | `docs/M1_SIGNOFF.md` | 2026-09-13 |
 
 ## Verified traps and failed approaches
 
@@ -40,6 +41,5 @@ Git history provides the audit trail.
 
 | Key | Unresolved question or next evidence | Owner | Review by |
 |---|---|---|---|
-| `m1-open-gates` | Wire parity, enforced limits, stdio integrity, Inspector evidence, and a named client/host policy remain before M1 completion. | UNASSIGNED | 2026-09-20 |
 | `owners` | Repository owner covers M0/M1; named security, Gambit, quant/domain, data, operations and release owners remain required before affected later milestones. | Repository owner | 2026-09-20 |
 | `capability-decisions` | Additional hosts, IdP/claims, Gambit artifact, first data format/profile, and queue/store/worker platform remain blocked at M2-M4, not M0. | UNASSIGNED | 2026-09-20 |

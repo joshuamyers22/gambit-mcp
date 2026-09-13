@@ -1,7 +1,9 @@
 import json
+import os
+import sys
 from unittest import IsolatedAsyncioTestCase, TestCase
 
-from mcp import Client
+from mcp import Client, StdioServerParameters
 from mcp.types import TextResourceContents
 from starlette.testclient import TestClient
 
@@ -21,6 +23,50 @@ class MCPServerContractTests(IsolatedAsyncioTestCase):
         self.assertEqual(
             [str(resource.uri) for resource in resources.resources],
             ["gambit://server/about", "gambit://capabilities"],
+        )
+
+    async def test_real_stdio_process_has_clean_protocol_output(self) -> None:
+        environment = os.environ.copy()
+        environment.update(
+            APP_ENVIRONMENT="test",
+            APP_LOG_LEVEL="debug",
+            APP_REVISION="stdio-test",
+        )
+        parameters = StdioServerParameters(
+            command=sys.executable,
+            args=["-m", "gambit_mcp.cli"],
+            env=environment,
+        )
+        async with Client(parameters, mode="auto") as client:
+            result = await client.call_tool(
+                "gambit_check_contract", {"contract_version": "v1"}
+            )
+            protocol_version = client.protocol_version
+            server_info = client.server_info
+
+        self.assertFalse(result.is_error)
+        self.assertEqual(protocol_version, SPEC_REVISION)
+        self.assertIsNotNone(server_info)
+        assert server_info is not None
+        self.assertEqual(server_info.name, "gambit-mcp")
+        self.assertEqual(server_info.version, "0.1.0")
+
+    async def test_real_stdio_accepts_modern_protocol_metadata(self) -> None:
+        environment = os.environ.copy()
+        environment.update(APP_ENVIRONMENT="test", APP_REVISION="modern-wire-test")
+        parameters = StdioServerParameters(
+            command=sys.executable,
+            args=["-m", "gambit_mcp.cli"],
+            env=environment,
+        )
+        async with Client(parameters, mode=SPEC_REVISION) as client:
+            result = await client.call_tool(
+                "gambit_check_contract", {"contract_version": "v1"}
+            )
+
+        self.assertFalse(result.is_error)
+        self.assertEqual(
+            result.structured_content["target_spec_revision"], SPEC_REVISION
         )
 
     async def test_contract_tool_has_structured_bounded_output(self) -> None:
@@ -112,3 +158,17 @@ class SettingsBoundsTests(TestCase):
                 "/health/live", headers={"x-request-id": "invalid request id"}
             )
         self.assertEqual(len(response.headers["x-request-id"]), 32)
+
+    def test_http_transport_rejects_oversized_body_before_dispatch(self) -> None:
+        settings = Settings(environment="test", max_request_body_bytes=1024)
+        app = build_server(settings).streamable_http_app(
+            stateless_http=True,
+            max_request_body_size=settings.max_request_body_bytes,
+        )
+        with TestClient(app) as client:
+            response = client.post(
+                "/mcp",
+                content=b"{" + (b" " * 1024) + b"}",
+                headers={"content-type": "application/json"},
+            )
+        self.assertEqual(response.status_code, 413)

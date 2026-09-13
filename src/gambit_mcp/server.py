@@ -12,6 +12,7 @@ from starlette.requests import Request
 from starlette.responses import JSONResponse
 
 from .contracts import CapabilityProfile, ContractCheck, ServerProfile
+from .limits import BoundaryLimits
 from .logging import configure_logging
 from .settings import Settings
 
@@ -40,6 +41,14 @@ def build_server(settings: Settings | None = None) -> MCPServer:
         instructions=(
             "Read-only research server. It does not trade, execute uploaded code, "
             "or currently run Gambit calculations."
+        ),
+        middleware=(
+            BoundaryLimits(
+                max_request_bytes=config.max_request_body_bytes,
+                max_response_bytes=config.max_response_bytes,
+                max_concurrent_calls=config.max_concurrent_calls,
+                tool_timeout_seconds=config.tool_timeout_seconds,
+            ),
         ),
     )
 

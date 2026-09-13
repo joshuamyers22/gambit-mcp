@@ -25,7 +25,7 @@ Status: accepted for staged implementation; no stage grants production approval.
 | Stage | Scope | Blocking exit evidence |
 |---|---|---|
 | M0 | Decisions and contracts | **Complete for local/no-data M1 boundary**; see `M0_SIGNOFF.md` |
-| M1 | Walking skeleton | Frozen build; modern and legacy client contracts; bounded tool/resource schemas; stdio integrity; localhost-only HTTP |
+| M1 | Walking skeleton | **Complete for local/no-data scope**; see `M1_SIGNOFF.md` |
 | M2 | Market-data validation | Admitted format and semantic-profile contracts; Gambit adapter and independent golden cases; bounded hostile-input tests |
 | M3 | Protected remote HTTP | OAuth resource-server metadata and challenges; token and object authorization; tenant isolation; header/body parity; distributed limits |
 | M4 | Datasets, jobs, results | Trusted entitlement source; handle lifecycle; encryption; audit durability; idempotent jobs; atomic artifacts; restore/deletion tests |
@@ -55,10 +55,11 @@ These are gates, not optional review notes. “P0” blocks only the named capab
 
 ## Current slice
 
-M1 exposes only two static resources and `gambit_check_contract`. The numeric
-limits are configuration-validated but not yet enforced by every transport;
-therefore remote production and M1 completion remain open. Gambit is intentionally
-not a runtime dependency until the M2 dependency/capability ADR is approved.
+M1 exposes only two static resources and `gambit_check_contract`. Its local
+transport, execution-limit, interoperability, artifact and container gates pass
+as recorded in `M1_SIGNOFF.md`. Remote production remains prohibited. Gambit is
+intentionally not a runtime dependency until the M2 dependency/capability ADR is
+approved.
 
 ## M0 progress
 
@@ -82,8 +83,8 @@ specialist-owner and evidence gates recorded in their ADRs.
 
 ## Next changes
 
-1. Complete the MCP-standard checklist and threat model for the M1 surface.
-2. Add golden wire/stdio corruption tests and transport body-limit enforcement.
-3. Decide modern-only versus dual-era support using named target clients.
-4. Define the M2 Polars/Arrow admission and market-data semantic profile.
-5. Pin an approved published Gambit artifact; never use a moving branch.
+1. Define the M2 Polars/Arrow admission and market-data semantic profile.
+2. Approve the Gambit adapter boundary and pin a published immutable artifact;
+   never use a moving branch.
+3. Add independent quant/data-owner golden cases and a bounded hostile-input
+   corpus before exposing market-data validation.
