@@ -22,7 +22,7 @@ build-backend = "hatchling.build"
 dev = [
   "httpx2==2.12.0",
   "jsonschema[format-nongpl]==4.26.0",
-  "pyright==1.1.411",
+  "pyright==1.1.414",
   "ruff==0.16.5",
 ]
 
