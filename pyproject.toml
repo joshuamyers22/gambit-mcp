@@ -23,7 +23,7 @@ dev = [
   "httpx2==2.12.0",
   "jsonschema[format-nongpl]==4.26.0",
   "pyright==1.1.411",
-  "ruff==0.16.5",
+  "ruff==0.16.7",
 ]
 
 [tool.hatch.build.targets.wheel]
